@@ -1,0 +1,5 @@
+venv
+.vscode
+screenshots
+*.json
+**/__pycache__
