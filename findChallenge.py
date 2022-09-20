@@ -1,4 +1,3 @@
-#!.\venv\Scripts\python
 from selenium.webdriver.edge.webdriver import WebDriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
