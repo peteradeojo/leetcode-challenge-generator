@@ -1,12 +1,14 @@
+from time import sleep
 from selenium.webdriver.edge.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 import os
-from pprint import pprint
 import json
-from datetime import date, datetime
+from datetime import datetime
+import cloudinary.uploader
+import os
 
 
 class Challenger:
@@ -18,7 +20,7 @@ class Challenger:
         if url:
             self.url = url
 
-    def loadProblems(self):
+    def loadProblems(self) -> list:
         links = []
         self.browser.get(self.url)
 
@@ -38,11 +40,13 @@ class Challenger:
 
         return links
 
-    def getChallenges(self):
+    def getChallenges(self) -> list:
         links = self.loadProblems()
 
         for link in links:
             self.browser.get(link['link'])
+
+            sleep(2)
 
             description = WebDriverWait(self.browser, 20).until(
                 EC.presence_of_element_located(
@@ -60,13 +64,26 @@ class Challenger:
             link['description'] = dirname + link['title'] + ".png"
 
         self.browser.quit()
-        return self.saveLinksToJson(links)
+        return links
 
-    def saveLinksToJson(self, data):
+
+class Saver:
+
+    def saveLinksToJson(self, data, filename=None) -> str:
         year, week, day = datetime.today().isocalendar()
-        filename = f"{year}-{week}.json"
+        if filename is None:
+            filename = f"{year}-{week}.json"
 
         with open(filename, "w+") as file:
             file.write(json.dumps(data))
 
         return filename
+
+
+class Uploader:
+
+    def save(self, file, folder):
+        result = cloudinary.uploader.upload(
+            file, folder=f"/leetcode-challenges/{folder}", overwrite=True)
+        print(result)
+        return result['secure_url']

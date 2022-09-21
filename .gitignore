@@ -3,3 +3,4 @@ venv
 screenshots
 *.json
 **/__pycache__
+.env

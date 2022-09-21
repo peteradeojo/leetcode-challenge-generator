@@ -14,8 +14,8 @@ This python script uses selenium and the Microsoft Edge webdriver to scare the [
 
 ## Upcoming
 - get input from the user to select what level of problems to generate
-- Upload the images to a CDN (cloudinary?)
-- Send the challenges to a slack channel
+[x] Upload the images to a CDN (cloudinary?)
+[x] Send the challenges to a slack channel
 
 ## How to run
 ### Dependencies
