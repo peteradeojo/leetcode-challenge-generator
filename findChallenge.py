@@ -1,3 +1,4 @@
+#!./venv/Scripts/python
 from datetime import datetime
 import json
 from selenium.webdriver.edge.webdriver import WebDriver
