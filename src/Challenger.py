@@ -13,7 +13,7 @@ import os
 
 class Challenger:
     browser: WebDriver
-    url = "https://leetcode.com/problemset/algorithms/?sorting=W3sic29ydE9yZGVyIjoiQVNDRU5ESU5HIiwib3JkZXJCeSI6IkRJRkZJQ1VMVFkifV0%3D"
+    url = "https://leetcode.com/problemset/algorithms/?sorting=W3t9XQ%3D%3D"
 
     def __init__(self, driver: WebDriver, url=None) -> None:
         self.browser = driver
