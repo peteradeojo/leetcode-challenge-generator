@@ -1,3 +1,4 @@
+from random import randint
 from time import sleep
 from selenium.webdriver.edge.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
@@ -13,18 +14,20 @@ import os
 
 class Challenger:
     browser: WebDriver
-    url = "https://leetcode.com/problemset/algorithms/?sorting=W3t9XQ%3D%3D"
+    url = "https://leetcode.com/problemset/algorithms/"
 
     def __init__(self, driver: WebDriver, url=None) -> None:
         self.browser = driver
         if url:
             self.url = url
+        page = randint(1, 49)
+        self.url += f"?page={page}"
 
     def loadProblems(self) -> list:
         links = []
         self.browser.get(self.url)
 
-        for i in range(2, 7):
+        for i in range(1, 7):
             el = WebDriverWait(
                 self.browser,
                 20,
@@ -36,7 +39,15 @@ class Challenger:
                     f"div[role='rowgroup'] div[role='row']:nth-child({i}) div[role='cell']:nth-child(2) a"
                 )))
 
-            links.append({"title": el.text, "link": el.get_attribute('href')})
+            try:
+                links.append({
+                    "title": el.text,
+                    "link": el.get_attribute('href')
+                })
+
+            except StaleElementReferenceException:
+                # pass
+                print("element not found")
 
         return links
 
